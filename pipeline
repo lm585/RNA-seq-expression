@@ -1,7 +1,18 @@
 /home/linyong/Zhong/RNA-seq-expression/exp-24RNA-seq-combined.txt  (penguin server)
 
 # fastq -> fasta
-1 ./fq_all2std.pl   fq2fa  2122_4423_6440_N_Scion813_I-23S_CACCGG_R1.fastq > 23S.fa
+1. ./fq_all2std.pl   fq2fa  2122_4423_6440_N_Scion813_I-23S_CACCGG_R1.fastq > 23S.fa
+
+# bowtie indexed ref genome
+ls rRNA_silva111*
+# rRNA_silva111         rRNA_silva111.2.ebwt  rRNA_silva111.4.ebwt      rRNA_silva111.rev.2.ebwt
+# rRNA_silva111.1.ebwt  rRNA_silva111.3.ebwt  rRNA_silva111.rev.1.ebwt
 
 ### -v: <=v mismatches; k  report up to <int> good alignments per read; --un write unaligned reads/pairs to file(s) <fname>
-2 bowtie -v 2 -k 1 -p 4 rRNA_silva111 --un 23S.clean.fa -f 23S.fa MMMM
+2. bowtie -v 2 -k 1 -p 4 rRNA_silva111 --un 23S.clean.fa -f 23S.fa MMMM
+# reads processed: 6372922
+# reads with at least one reported alignment: 227532 (3.57%)
+# reads that failed to align: 6145390 (96.43%)
+# Reported 227532 alignments to 1 output stream(s)
+
+rm  23S.fa MMMM 
