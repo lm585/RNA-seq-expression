@@ -16,3 +16,39 @@ ls rRNA_silva111*
 # Reported 227532 alignments to 1 output stream(s)
 
 rm  23S.fa MMMM 
+
+### determine if strand specific. 23S is strand specific
+3. sh  ./script-get-100-seq
+23S.clean.fa
+-98
+-97
+-97
+-96
+-91
+-81
+-63
+-60
+-53
+-51
+93 temp.blast.res
+
+###### cat ./script-get-100-seq ###############################
+ls *.clean.fa | while read ll
+do
+  awk 'NR > 1000000
+      {
+       if(NR % 4 == 1)
+         print ">" $1;
+       else if (NR % 4 == 2)
+         print $1;
+       else;
+      }' $ll | head -200 > temp-$ll.100.fa
+  blastall -p blastn -d   V1_mrna.fa  -i temp-$ll.100.fa  -e 1e-15 -F F -S 3 -o temp-$ll.100.blast -m 9
+  echo $ll
+  grep "# Fields: Query id, Subject id," -A 1  temp-$ll.100.blast  | grep "^>" | awk '{print $10 - $9}' > temp.blast.res
+  sort -n temp.blast.res | tail
+  wc -l temp.blast.res
+done
+##########################################################
+
+
