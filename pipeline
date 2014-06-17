@@ -67,6 +67,8 @@ chr14   2600404 2607034 GSVIVG01000002001       -
 chr14   2616036 2620460 GSVIVG01000003001       -
 chr14   2638641 2642144 GSVIVG01000004001       +
 
+##result file: exp_sense_raw
+
 ###### Get uniq mapped num ...
 6. get_uniq_mapped_num.pl -i list -s SS
 ######### cat dir-test-tophat-pipeline/uniq_mapped_num
@@ -83,5 +85,5 @@ GSVIVG01000002001       1969
 GSVIVG01000003001       1387
 GSVIVG01000004001       1183
 
-
+### result file: exp_rpkm
 
