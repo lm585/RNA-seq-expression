@@ -1,3 +1,5 @@
+/home/linyong/Zhong/RNA-seq-expression/script-rRNA-tophat-riesling (pipeline in penguin server)
+
 /home/linyong/Zhong/RNA-seq-expression/exp-24RNA-seq-combined.txt  (penguin server)
 
 # fastq -> fasta
@@ -50,5 +52,36 @@ do
   wc -l temp.blast.res
 done
 ##########################################################
+
+####### strand specific; 10 threads; 3 edit distance; gff3 file; intron 5k
+4. tophat2 -o p2.clean_m0  --no-convert-bam --library-type fr-firststrand  -p 10 --segment-mismatches 1 
+--read-mismatches 3  --read-edit-dist 3  --max-multihits 20  --segment-length 25  -G  ../V1.phase.gff3   
+--max-intron-length 5000 --max-segment-intron 5000    ../grape_genome p2.clean.fa
+
+
+### Get expression raw count ...
+5. get_exp_raw.pl -i list -s SS -a ../grape_gene_position
+###########   cat  ./grape_gene_position | head
+chr14   2596280 2598951 GSVIVG01000001001       -
+chr14   2600404 2607034 GSVIVG01000002001       -
+chr14   2616036 2620460 GSVIVG01000003001       -
+chr14   2638641 2642144 GSVIVG01000004001       +
+
+###### Get uniq mapped num ...
+6. get_uniq_mapped_num.pl -i list -s SS
+######### cat dir-test-tophat-pipeline/uniq_mapped_num
+#Sample clean   mapped reads    %mapped
+p1.clean        9638    8540    88.61
+p10.clean       9929    7773    78.29
+p2.clean        9870    7015    71.07
+
+##### Get expression of RPKM ...
+7. get_exp_rpkm.pl -x ../grape_gene_length -u uniq_mapped_num -e exp_sense_raw
+############### head ./grape_gene_length
+GSVIVG01000001001       534
+GSVIVG01000002001       1969
+GSVIVG01000003001       1387
+GSVIVG01000004001       1183
+
 
 
