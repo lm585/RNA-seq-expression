@@ -54,10 +54,9 @@ done
 ##########################################################
 
 ####### strand specific; 10 threads; 3 edit distance; gff3 file; intron 5k
-4. tophat2 -o p2.clean_m0  --no-convert-bam --library-type fr-firststrand  -p 10 --segment-mismatches 1 
+4. tophat2 -o 23S.clean_m0  --no-convert-bam --library-type fr-firststrand  -p 10 --segment-mismatches 1 
 --read-mismatches 3  --read-edit-dist 3  --max-multihits 20  --segment-length 25  -G  ../V1.phase.gff3   
---max-intron-length 5000 --max-segment-intron 5000    ../grape_genome p2.clean.fa
-
+--max-intron-length 5000 --max-segment-intron 5000    ../grape_genome 23S.clean.fa
 
 ### Get expression raw count ...
 5. get_exp_raw.pl -i list -s SS -a ../grape_gene_position
