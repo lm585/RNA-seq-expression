@@ -86,3 +86,6 @@ GSVIVG01000004001       1183
 
 ### result file: exp_rpkm
 
+8. ### get mapping stat.
+library	library-type	read-len.	map-param.	rRNA(%)	cleaned-reads	mapped-reads	mapped(%)
+C3309Root-25-2009.clean	strand-specific	101bp	 -n 3	5.41%	43,093,619	32,000,263	74.26%
