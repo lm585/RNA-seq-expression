@@ -79,6 +79,7 @@ p2.clean        9870    7015    71.07
 ##### Get expression of RPKM ...
 7. get_exp_rpkm.pl -x ../grape_gene_length -u uniq_mapped_num -e exp_sense_raw
 ############### head ./grape_gene_length
+#   lengths for all CDS + lengths for UTR
 GSVIVG01000001001       534
 GSVIVG01000002001       1969
 GSVIVG01000003001       1387
