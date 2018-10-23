@@ -1,0 +1,85 @@
+
+> setwd("C:/Users/Linyong/Documents/collaboration/RNA-seq slim")
+>rawCount <- read.csv(file="20181017_HVTN505.gene_count.noWater.raw.csv", header=TRUE, sep=",")
+> head <-  colnames(rawCount)
+
+######plot  MDS  ######################
+> library("edgeR")
+> rawCount <- read.csv(file="20181017_HVTN505.gene_count.noWater.raw.csv", header=TRUE, sep=",", row.names = 1)
+> group <- factor(rep(1, 30))
+> y <- DGEList(counts=rawCount,group=group)
+> y <- calcNormFactors(y)
+> d = plotMDS(y)
+> write.table(d$x, file = "MDS.op.txt", quote = FALSE, sep = "\t")
+> write.table(d$y, file = "MDS.op.txt", append = TRUE, quote = FALSE, sep = "\t")
+> cmdscale(d$distance.matrix , k =2, eig = TRUE)
+
+#### DEG identification #########
+> x <- read.delim( "temp-V9-6samp-gene_count.raw.tab.txt", header=F, row.names=1)
+> colnames(x)<-c("mDC_17-V9","mDC_21-V9","mDC_26-V9","mDC_48-V9","mDC_57-V9","mDC_64-V9") 
+> group <- factor(c(1,1,1,1,2,2))
+> y <- DGEList(counts=x,group=group)
+> y <- calcNormFactors(y)
+> keep <-rowSums(cpm(y)>=1) >=2
+> y<-y[keep,]
+> dim(y)
+[1] 14716     6
+d <- cpm(y) 
+write.table(d, "CPM.txt", sep="\t") 
+design<-model.matrix(~0+group) 
+y <- estimateGLMCommonDisp(y,design) 
+y <- estimateGLMTrendedDisp(y,design) 
+y <- estimateGLMTagwiseDisp(y,design) 
+fit<-glmFit(y,design) 
+lrt.2vs1 <- glmLRT(fit, contrast=c(-1,1)) 
+top2v1 <- topTags(lrt.2vs1, n=5000) 
+write.table(top2v1, "diff2-1.txt", sep="\t")
+
+
+########## V2 samples ##################
+>  x <- read.delim(  "temp-V2-9samp-gene_count.raw.tab.txt", header=T, row.names=1)
+> group <- factor(c(1,1,1,1,1,1,2,2,2))
+> y <- DGEList(counts=x,group=group)
+> y <- calcNormFactors(y)
+> keep <-rowSums(cpm(y)>=1) >=3
+> y<-y[keep,]
+> dim(y)
+[1] 14679     9
+> d <- cpm(y)
+> write.table(d, "CPMv2.txt", sep="\t")
+
+
+################ all 28 samples cpm####################
+> rawCount <- read.csv(file="20181017_HVTN505.gene_count.noWater.no18v2_51v7.raw.csv", header=TRUE, sep=",", row.names = 1)
+> group <- factor(rep(1, 28))
+> y <- DGEList(counts=rawCount,group=group)
+>  y <- calcNormFactors(y)
+> keep <-rowSums(cpm(y)>=1) >= 11
+>  y<-y[keep,]
+> d <- cpm(y)
+> write.table(d, "CPM28samples.txt", sep="\t")
+
+###### some Unix commands to prepare a gene list ###############
+####### IRF7	ENSG00000185507,ENSG00000276561 ##########
+#####heatmap for pathway##################################
+$ cat temp-28s-order | while read ll; do awk '$1 == "'$ll'" {print $2}' temp-samp.info; done > out
+$ awk '$2 ~ /^ENSG/' INTERFERON_GAMMA  | awk '{for(i = 2; i <= NF; i++) print $i "\t" $1}' > gamma.xls
+$ cat   temp-alpha-and-gamma | while read ll; do awk '$2 == "'$ll'" '  gamma.xls ; done
+
+#####GSEA ##########################################
+http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/RNA-Seq_Data_and_Ensembl_CHIP_files 
+RNA-Seq Data and Ensembl CHIP files
+GSEA Home | Downloads | Molecular Signatures Database | Documentation | Contact 
+A GSEA analysis requires three different types of input data: a gene expression dataset in GCT format, the corresponding sample annotations in CLS format, and a collection of gene sets in GMT format. GSEA is typically used with gene sets from the Molecular Signatures Database (MSigDB), which consist of HUGO human gene symbols. However, gene expression data files may use other types of identifiers, depending on how the data were produced. To proceed with the analysis, GSEA converts the identifiers found in the data file to match the human symbols used in the gene set files. The conversion is performed using a CHIP file that provides the mapping between the two types of identifiers. Over the years, we have been providing CHIP files for all major microarray platforms. For example, we have CHIP files that list the mappings between Affymetrix probe set IDs and human genome symbols. 
+In RNA-Seq, gene expression is quantified by counting the number of sequencing reads that aligned to a genomic range, according to a reference genome assembly or transcript annotations. The majority of tools use Ensembl reference annotations for this purpose. To facilitate GSEA analysis of RNA-Seq data, we now also provide CHIP files to convert human and mouse Ensembl IDs to HUGO gene symbols. Ensembl annotation uses a system of stable IDs that have prefixes based on the species name plus the feature type, followed by a series of digits and a version, e.g., ENSG00000139618.1. The new GSEA Ensembl CHIP files provide mappings for human gene and transcript identifiers (i.e., Ensembl IDs with prefixes ENSG and ENST), and for mouse gene and transcript identifiers (i.e., Ensemble IDs with prefixes ENSMUSG and ENSMUST). 
+To run GSEA with gene expression data specified with Ensembl identifiers: 
+1.	Prepare the GCT gene expression file such that identifiers are in the form of Ensembl IDs, but without the version suffix, e.g., ENSG00000139618. 
+2.	For RNA-Seq data, you will need normalize and filter out low count measurements, and perform other preprocessing as needed. Consult your local bioinformatician for help if unsure. 
+3.	Load the GCT and corresponding CLS files into GSEA. 
+4.	Choose gene sets to test - we usually recommend starting with the Hallmarks collection. 
+5.	Choose the CHIP file that matches the identifiers in the GCT file: 
+o	ENSEMBL_human_gene.chip => Ensembl ID prefix ENSG 
+o	ENSEMBL_human_transcript.chip => Ensembl ID prefix ENST 
+o	ENSEMBL_mouse_gene.chip => Ensembl ID prefix ENSMUSG 
+o	ENSEMBL_mouse_transcript.chip => Ensembl ID prefix ENSMUST 
+We have also added the gene-level Ensembl IDs to the website for use with the Investigate Gene Sets tools such as Compute Overlaps. As noted above, it is necessary to remove the version suffix from any supplied IDs. At this time, transcript-level identifiers are not accepted. 
