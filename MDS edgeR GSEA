@@ -52,6 +52,8 @@ write.table(top2v1, "diff2-1.txt", sep="\t")
 ################ all 28 samples cpm####################
 > rawCount <- read.csv(file="20181017_HVTN505.gene_count.noWater.no18v2_51v7.raw.csv", header=TRUE, sep=",", row.names = 1)
 > group <- factor(rep(1, 28))
+############# 1 for HIV, 0 for healthy; 17 healths, 11 HIVs)                               #########################
+#############   group <- factor(c(1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,1,1,1,0,0)) ####################
 > y <- DGEList(counts=rawCount,group=group)
 >  y <- calcNormFactors(y)
 > keep <-rowSums(cpm(y)>=1) >= 11
