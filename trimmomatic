@@ -1,0 +1,27 @@
+$  java -jar /home/linyong/data-link/dir-proCancer-mRNA/dir-trim/Trimmomatic-0.36/trimmomatic-0.36.jar SE -threads 12 S12-1439A21_1.fastq trimmed.S12-1439A21_1.fastq ILLUMINACLIP:RNA-seq-adaptor.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+The ordr of trimming matters
+
+SE mapping
+
+:2:30:10
+Seed (16bp) allows 2 mismatches
+These seeds will be extended and clipped if a score of 10 is reached (10/0.6 = 16.66 bp)
+
+remove leading bases if ALL of them below quality 3
+
+SLIDINGWINDOW:4:15  If a window has average quality below 15, the current window and all tailing based will be trimmed
+
+Drop reads which are less than 36 bases long after these steps
+
+$ cat RNA-seq-adaptor.fa
+>RNA_seq_adaptor
+TGGAATTCTCGGGTGCCAAGG
+
+TrimmomaticSE: Started with arguments:
+ -threads 12 S12-1439A21_1.fastq trimmed.S12-1439A21_1.fastq ILLUMINACLIP:RNA-seq-adaptor.fa:2:30:9 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+Using Medium Clipping Sequence: 'TGGAATTCTCGGGTGCCAAGG'
+ILLUMINACLIP: Using 0 prefix pairs, 1 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 29338104 Surviving: 6518922 (22.22%) Dropped: 22819182 (77.78%)
+TrimmomaticSE: Completed successfully
