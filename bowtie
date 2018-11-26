@@ -1,0 +1,22 @@
+bowtie-build ../rRNA_silva111 rRNA_silva111
+# 519M Jun 22  2016 ../rRNA_silva111
+# It takes one hour or so to index the reference
+
+bowtie -v 2 -k 1 -p 12 -q  --un unaligned.fastq rRNA_silva111   head-8m.fastq   align.sam
+# -v 2 have no more than 2 mismatches;
+# -k 1 report up to 1 valid alignment
+# -p 12 thread
+# -q fastq input
+# --un Write all reads that could not be aligned to a file 
+# indexed ref; input fastq; File to write alignments to
+
+# reads processed: 2000000
+# reads with at least one reported alignment: 58287 (2.91%)
+# reads that failed to align: 1941713 (97.09%)
+Reported 58287 alignments to 1 output stream(s)
+
+bowtie -v 2 -k 1 -p 12 -q  rRNA_silva111    unaligned.fastq
+# reads processed: 1941713
+# reads with at least one reported alignment: 0 (0.00%)
+# reads that failed to align: 1941713 (100.00%)
+No alignments
