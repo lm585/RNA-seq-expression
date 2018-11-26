@@ -1,3 +1,9 @@
+$ ls /usr/bin/bow* -lh
+-rwxr-xr-x 1 root root 638K Jun 28  2011 /usr/bin/bowtie
+-rwxr-xr-x 1 root root 2.1K Nov 16  2010 /usr/bin/bowtie2sam.pl
+-rwxr-xr-x 1 root root 264K Jun 28  2011 /usr/bin/bowtie-build
+-rwxr-xr-x 1 root root 215K Jun 28  2011 /usr/bin/bowtie-inspect
+
 bowtie-build ../rRNA_silva111 rRNA_silva111
 # 519M Jun 22  2016 ../rRNA_silva111
 # It takes one hour or so to index the reference
