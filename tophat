@@ -1,0 +1,7 @@
+tophat --GTF /home/linyong/hg19ref/Homo_sapiens.GRCh37.82.chrNameConverted.gtf --transcriptome-index  dir_name/prefix /home/linyong/hg19ref/hg19
+
+# build transcriptome database
+# will create a new directory dir_name if not existing
+#under dir_name, will create prefix.1.bt2  prefix.2.bt2  prefix.3.bt2  prefix.4.bt2  prefix.fa  prefix.fa.tlst  prefix.gff  prefix.rev.1.bt2  prefix.rev.2.bt2  prefix.ver
+# transcriptome fasta file; gff file
+# /home/linyong/hg19ref/hg19 indexed genome database -- hg19.1.bt2, ..., hg19.4.bt2, hg19.fa, hg19.rev.1.bt2, hg19.rev.2.bt2
