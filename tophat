@@ -5,3 +5,33 @@ tophat --GTF /home/linyong/hg19ref/Homo_sapiens.GRCh37.82.chrNameConverted.gtf -
 #under dir_name, will create prefix.1.bt2  prefix.2.bt2  prefix.3.bt2  prefix.4.bt2  prefix.fa  prefix.fa.tlst  prefix.gff  prefix.rev.1.bt2  prefix.rev.2.bt2  prefix.ver
 # transcriptome fasta file; gff file
 # /home/linyong/hg19ref/hg19 indexed genome database -- hg19.1.bt2, ..., hg19.4.bt2, hg19.fa, hg19.rev.1.bt2, hg19.rev.2.bt2
+
+tophat  --read-mismatches 1  --read-gap-length 1  --read-edit-dist 1 -o dir-bam-param2  -p 24 --library-type fr-firststrand  --no-coverage-search  --transcriptome-index dir_name/prefix  /home/linyong/hg19ref/hg19  no-rRNA.trimmed.S11-2298D1_1.fastq
+
+# --no-coverage-search , saved 12 hours
+# fr-firststrand : read same orientation as gene's strand
+# default --max-multihits 20
+$ cat  dir-bam-param2/align_summary.txt
+Reads:
+          Input     :  11171497
+           Mapped   :   5341255 (47.8% of input)
+            of these:    784485 (14.7%) have multiple alignments (11404 have >20)
+47.8% overall read mapping rate.
+# read has > 20 hits, not reported in  accepted_hits.bam
+
+tophat  --read-mismatches 1  --read-gap-length 1  --read-edit-dist 1 -o dir-bam-param4 -p 24 --library-type fr-firststrand  --no-coverage-search  --transcriptome-only  --prefilter-multihits    --transcriptome-index dir_name/prefix  /home/linyong/hg19ref/hg19  no-rRNA.trimmed.S11-2298D1_1.fastq
+
+$ cat dir-bam-param4/align_summary.txt
+Reads:
+          Input     :  11121755
+           Mapped   :   2730596 (24.6% of input)
+            of these:    440271 (16.1%) have multiple alignments (50696 have >20)
+24.6% overall read mapping rate.
+# [2018-11-29 11:47:33] Reading known junctions from GTF file
+ [2018-11-29 11:48:13] Pre-filtering multi-mapped left reads
+ [2018-11-29 11:48:13] Mapping no-rRNA.trimmed.S11-2298D1_1 to genome hg19 with Bowtie2
+# [2018-11-29 11:55:43] Preparing reads
+          left reads: min. length=36, max. length=51, 11121633 kept reads (49864 discarded)
+# [2018-11-29 11:58:06] Using pre-built transcriptome data..
+# [2018-11-29 11:58:09] Mapping left_kept_reads to transcriptome prefix with Bowtie2
+
