@@ -35,3 +35,30 @@ Reads:
 # [2018-11-29 11:58:06] Using pre-built transcriptome data..
 # [2018-11-29 11:58:09] Mapping left_kept_reads to transcriptome prefix with Bowtie2
 
+htseq-count  -f bam  -s yes -t exon  -i gene_id  -m union --additional-attr=gene_name --nonunique=none  --samout=read-annot.sam  accepted_hits.bam /home/linyong/hg19ref/Homo_sapiens.GRCh37.82.chrNameConverted.gtf
+#Howard server
+#Part of the 'HTSeq' framework, version 0.11.0.
+# -s yes ; strand specific, only count the reads with same orientations as transcripts
+#Must be in the format --samout=read-annot.sam
+
+$ awk 'NR % 2000 == 0' accepted_hits.param2.geneCount
+ENSG00000092841 MYL6    222
+ENSG00000111845 PAK1IP1 76
+ENSG00000127884 ECHS1   167
+...
+__no_feature            2321428
+__ambiguous             252984
+__too_low_aQual         0
+__not_aligned           0
+__alignment_not_unique          784485
+
+$ grep -w NH:i:1  read-annot.sam | grep XF:Z:ENSG | wc -l
+1982358
+
+#read-annot.sam
+SN996:110:HFMTMBCXX:1:1107:1179:33029   16      chr1    14650   3       51M     *       0       0       CAACGGCCCAAGTCTGGGTCTGGGGGGAAAGGTGTCATGGAGCCCCCTACG     IIIIIIHHIHIIIIIIIIIHIIIIIIIIIIIIIIIIIIIIIIHIIIDDDDDAS:i:-6 XN:i:0  XM:i:1  XO:i:0  XG:i:0  NM:i:1  MD:Z:27G23      YT:Z:UU XS:A:-  NH:i:2  CC:Z:chr9       CP:i:14761      HI:i:0  XF:Z:__alignment_not_unique
+SN996:110:HFMTMBCXX:1:1115:15326:12937  16      chr1    89342   50      51M     *       0       0       CTTACAAATGGATTACACGCATTTTCATGTGCTGTTGGCTACTTATTCATT     HIIIHIIIIIIIIIIIIIIIIIIIIIIIIIIHIIIIIIIIIIIIIHDDDDDAS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:51 YT:Z:UU XS:A:-  NH:i:1  XF:Z:ENSG00000238009
+
+htseq-count -f bam -s yes -t exon -i gene_id  -m union  -o read-annot.sam  accepted_hits.bam Homo_sapiens.GRCh37.82.chrNameConverted.gtf
+# william server; old htseq-count version. Part of the 'HTSeq' framework, version 0.6.1p1.
+# -s yes ; strand specific, only count the reads with same orientations as transcripts
