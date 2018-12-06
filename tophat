@@ -35,7 +35,7 @@ Reads:
 # [2018-11-29 11:58:06] Using pre-built transcriptome data..
 # [2018-11-29 11:58:09] Mapping left_kept_reads to transcriptome prefix with Bowtie2
 
-htseq-count  -f bam  -s yes -t exon  -i gene_id  -m union --additional-attr=gene_name --nonunique=none  --samout=read-annot.sam  accepted_hits.bam /home/linyong/hg19ref/Homo_sapiens.GRCh37.82.chrNameConverted.gtf
+htseq-count  -f bam  -s yes -t exon  -i gene_id  -m union --additional-attr=gene_name --nonunique=none  --samout=read-annot.sam  accepted_hits.bam /home/linyong/hg19ref/Homo_sapiens.GRCh37.82.chrNameConverted.gtf > accepted_hits.param2.geneCount
 #Howard server
 #Part of the 'HTSeq' framework, version 0.11.0.
 # -s yes ; strand specific, only count the reads with same orientations as transcripts
