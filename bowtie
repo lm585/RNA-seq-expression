@@ -26,3 +26,19 @@ bowtie -v 2 -k 1 -p 12 -q  rRNA_silva111    unaligned.fastq
 # reads with at least one reported alignment: 0 (0.00%)
 # reads that failed to align: 1941713 (100.00%)
 No alignments
+
+$ bowtie -v 2 -k 1 -p 12 -q --un unaligned.fastq  /data/linyong/dir-proCancer-mRNA/rRNA_silva111  index_37-V2_2P align.sam
+# reads processed: 5768150
+# reads with at least one reported alignment: 317926 (5.51%)
+# reads that failed to align: 5450224 (94.49%)
+Reported 317926 alignments to 1 output stream(s)
+
+$ awk '{print $1}'   align.sam | sort | uniq > temp-read2-align-rRNA
+
+$ wc -l temp-read*
+  319288 temp-read1-align-rRNA
+  317926 temp-read2-align-rRNA
+# PE reads in single end mapping
+
+$ cat  temp-read* | sort | uniq -d | wc -l
+# 285268
