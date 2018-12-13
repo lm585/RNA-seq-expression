@@ -43,6 +43,12 @@ TACACTCTTTCCCTACACGACGCTCTTCCGATCT
 >PrefixPE/2
 GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT
 
+$ ls index*bothReads* -lh
+-rw-rw-r-- 1 linyong linyong 1.2G Dec 12 12:07 index_37-V2-bothReads_1P
+-rw-rw-r-- 1 linyong linyong  42M Dec 12 12:07 index_37-V2-bothReads_1U
+-rw-rw-r-- 1 linyong linyong 1.1G Dec 12 12:07 index_37-V2-bothReads_2P
+-rw-rw-r-- 1 linyong linyong 2.8M Dec 12 12:07 index_37-V2-bothReads_2U
+
 # 'Palindrome' trimming
 # These seeds will be extended and clipped if in the case of paired end reads a score of 30 is reached (about 50 bases).
 # minAdapterLength: In addition to the alignment score, palindrome mode can verify that a minimum length of adapter has been detected. If unspecified, this defaults to 8 bases, for historical reasons.
