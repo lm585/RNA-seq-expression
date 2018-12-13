@@ -25,3 +25,24 @@ ILLUMINACLIP: Using 0 prefix pairs, 1 forward/reverse sequences, 0 forward only 
 Quality encoding detected as phred33
 Input Reads: 29338104 Surviving: 6518922 (22.22%) Dropped: 22819182 (77.78%)
 TrimmomaticSE: Completed successfully
+
+$ java -jar /home/linyong/data-link/dir-proCancer-mRNA/dir-trim/Trimmomatic-0.36/trimmomatic-0.36.jar PE -threads 24 -trimlog logBothReads  read1_index_37-V2.fq read2_index_37-V2.fq -baseout index_37-V2-bothReads  ILLUMINACLIP:/home/linyong/data-link/dir-proCancer-mRNA/dir-trim/Trimmomatic-0.36/adapters/TruSeq3-PE.fa:2:30:10:8:keepBothReads  LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+TrimmomaticPE: Started with arguments:
+ -threads 24 -trimlog logBothReads read1_index_37-V2.fq read2_index_37-V2.fq -baseout index_37-V2-bothReads ILLUMINACLIP:/home/linyong/data-link/dir-proCancer-mRNA/dir-trim/Trimmomatic-0.36/adapters/TruSeq3-PE.fa:2:30:10:8:keepBothReads LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+Using templated Output files: index_37-V2-bothReads_1P index_37-V2-bothReads_1U index_37-V2-bothReads_2P index_37-V2-bothReads_2U
+Using PrefixPair: 'TACACTCTTTCCCTACACGACGCTCTTCCGATCT' and 'GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT'
+ILLUMINACLIP: Using 1 prefix pairs, 0 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Read Pairs: 6016003 Both Surviving: 5768150 (95.88%) Forward Only Surviving: 217392 (3.61%) Reverse Only Surviving: 14943 (0.25%) Dropped: 15518 (0.26%)
+TrimmomaticPE: Completed successfully
+
+$ cat /home/linyong/data-link/dir-proCancer-mRNA/dir-trim/Trimmomatic-0.36/adapters/TruSeq3-PE.fa
+>PrefixPE/1
+TACACTCTTTCCCTACACGACGCTCTTCCGATCT
+>PrefixPE/2
+GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT
+
+# 'Palindrome' trimming
+# These seeds will be extended and clipped if in the case of paired end reads a score of 30 is reached (about 50 bases).
+# minAdapterLength: In addition to the alignment score, palindrome mode can verify that a minimum length of adapter has been detected. If unspecified, this defaults to 8 bases, for historical reasons.
