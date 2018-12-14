@@ -67,6 +67,7 @@ PE
 ############tophat PE mapping ################################
 $ tophat  --read-mismatches 2  --read-gap-length 2  --read-edit-dist 2   -o dir-bam    -p 24 --library-type fr-unstranded  --no-coverage-search  --transcriptome-index /data/linyong/dir-proCancer-mRNA/dir-test/dir_name/prefix   /home/linyong/hg19ref/hg19    index_37-V2_1P     index_37-V2_2P
 
+### 75-bp read#####
 [2018-12-13 10:13:09] Beginning TopHat run (v2.1.1)
 -----------------------------------------------
 [2018-12-13 10:13:09] Checking for Bowtie
@@ -123,3 +124,12 @@ Aligned pairs:   5465180
      of these:    199250 ( 3.6%) have multiple alignments
                    87755 ( 1.6%) are discordant alignments
 93.2% concordant pair alignment rate.
+
+### other tophat PE mapping param####
+-r/--mate-inner-dist <int>      This is the expected (mean) inner distance between mate pairs. For, example, for paired end runs with fragments selected at 300bp, where each end is 50bp, you should set -r to be 200. The default is 50bp.
+
+--mate-std-dev <int>    The standard deviation for the distribution on inner distances between mate pairs. The default is 20bp.
+
+--no-discordant         For paired reads, report only concordant mappings.
+--no-mixed      For paired reads, only report read alignments if both reads in a pair can be mapped (by default, if TopHat cannot find a concordant or discordant alignment for both reads in a pair, it will find and report alignments for each read separately; this option disables that behavior).
+
