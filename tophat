@@ -133,3 +133,23 @@ Aligned pairs:   5465180
 --no-discordant         For paired reads, report only concordant mappings.
 --no-mixed      For paired reads, only report read alignments if both reads in a pair can be mapped (by default, if TopHat cannot find a concordant or discordant alignment for both reads in a pair, it will find and report alignments for each read separately; this option disables that behavior).
 
+$ htseq-count -f bam -s no -t exon -i gene_id -m union --additional-attr=gene_name --nonunique=none --order=name  --samout=read-annot.sam accepted_hits.sortByName.bam /home/linyong/hg19ref/Homo_sapiens.GRCh37.82.chrNameConverted.gtf > accepted_hits.geneCount
+# not strand specific
+#  samtools sort -n accepted_hits.bam accepted_hits.sortByName
+
+100000 GFF lines processed.
+200000 GFF lines processed.
+300000 GFF lines processed.
+
+$ tail   accepted_hits.geneCount
+ENSG00000273487 RP4-621B10.8    0
+ENSG00000273488 RP11-114I8.4    3
+ENSG00000273489 RP11-180C16.1   1
+ENSG00000273492 AP000230.1      0
+ENSG00000273493 RP11-80H18.4    0
+__no_feature            1069283
+__ambiguous             330234
+__too_low_aQual         0
+__not_aligned           0
+__alignment_not_unique  209849
+
